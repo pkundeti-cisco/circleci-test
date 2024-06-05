@@ -12,7 +12,7 @@ parameters:
     type: string
   role-name:
     type: string
-    default: "arn:aws:iam::730335471586:role/admin"
+    default: "arn:aws:iam::730335471586:assumed-role/admin/pkundeti@cisco.com"
 
 executors:
    tf-docker:
