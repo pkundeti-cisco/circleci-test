@@ -12,7 +12,7 @@ parameters:
     type: string
   role-name:
     type: string
-    default: "arn:aws:iam::730335471586:assumed-role/admin/pkundeti@cisco.com"
+    default: "arn:aws:iam::730335471586:oidc-provider/oidc.circleci.com/org/5252cc30-103d-4668-8c6e-e0d0b434e734"
 
 executors:
    tf-docker:
