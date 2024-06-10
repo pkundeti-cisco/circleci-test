@@ -65,8 +65,6 @@ jobs:
                curl -fLSs "https://releases.hashicorp.com/terraform/<< pipeline.parameters.tf-version >>/terraform_<< pipeline.parameters.tf-version >>_linux_amd64.zip" -o "terraform_<< pipeline.parameters.tf-version >>.zip"
                sudo unzip -o terraform_<< pipeline.parameters.tf-version >>.zip
                sudo mv terraform /usr/local/bin/
-      - aws-cli/setup:
-          profile_name: $CIRCLE_PROJECT_USERNAME
       - run:
           name: run tf-plan
           command: |
