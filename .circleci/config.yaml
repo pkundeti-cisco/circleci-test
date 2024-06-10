@@ -1,0 +1,87 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@4.1.2
+
+parameters: 
+  us-east-1:
+    default: false
+    type: boolean
+  tf-version:
+    default: 1.8.3
+    type: string
+  custom-config:
+    default: false
+    type: boolean
+  default-region:
+    default: us-east-1
+    type: string
+  workspace:
+    default: "aws-terraform"
+    type: string
+  aws-default-region:
+    type: string
+    default: "us-east-1"
+  oidc-role:
+    type: string
+    default: "arn:aws:iam::<account-id>:role/<oidc-role-name>"
+
+executors:
+   tf-docker:
+      docker: 
+        - image: hashicorp/terraform:<< pipeline.parameters.tf-version >>
+      resource_class: medium
+   ubuntu-default:
+     machine:
+       image: ubuntu-2204:2024.04.4
+     resource_class: medium
+     environment: 
+       AWS_REGION: "us-east-1"
+
+jobs:
+  say-hello:
+    docker:
+      - image: cimg/base:current
+    steps:
+      # Checkout the code as the first step.
+      - checkout
+      - run:
+          name: "Say hello"
+          command: "echo Hello, World!"
+
+  tf-plan:
+    executor: ubuntu-default
+    steps:
+      - checkout
+      - aws-cli/setup:
+          region: << pipeline.parameters.aws-default-region >>
+          role_arn: << pipeline.parameters.oidc-role >>
+          role_session_name: "CircleCI-${CIRCLE_WORKFLOW_ID}-${CIRCLE_JOB}"
+      - run:
+          name: Install Terraform version << pipeline.parameters.tf-version >>
+          command: | 
+               sudo rm -rf terraform/
+               sudo apt install unzip zip -y
+               curl -fLSs "https://releases.hashicorp.com/terraform/<< pipeline.parameters.tf-version >>/terraform_<< pipeline.parameters.tf-version >>_linux_amd64.zip" -o "terraform_<< pipeline.parameters.tf-version >>.zip"
+               sudo unzip -o terraform_<< pipeline.parameters.tf-version >>.zip
+               sudo mv terraform /usr/local/bin/
+      - aws-cli/setup:
+          profile_name: $CIRCLE_PROJECT_USERNAME
+      - run:
+          name: run tf-plan
+          command: |
+               cd << pipeline.parameters.workspace >>
+               aws s3 cp s3://$FIELDENG_TF_BUCKET/terraform-test.tfvars .
+               terraform init -input=false
+               terraform plan -out tfapply -var-file="terraform-test.tfvars"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+
+
+workflows:
+  tf-workflow:
+    jobs:
+      - tf-plan
