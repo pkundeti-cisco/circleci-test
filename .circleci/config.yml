@@ -71,6 +71,7 @@ jobs:
                cd << pipeline.parameters.workspace >>
                terraform init -input=false
                terraform plan -out tfapply
+               terraform apply -auto-approve tfapply
       - persist_to_workspace:
           root: .
           paths:
