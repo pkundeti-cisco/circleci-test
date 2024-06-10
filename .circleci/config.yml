@@ -24,7 +24,7 @@ parameters:
     default: "us-east-1"
   oidc-role:
     type: string
-    default: "arn:aws:iam::<account-id>:role/<oidc-role-name>"
+    default: "arn:aws:iam::730335471586:role/CircleCI_OpenID_Role"
 
 executors:
    tf-docker:
