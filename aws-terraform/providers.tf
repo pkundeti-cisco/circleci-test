@@ -3,7 +3,7 @@ terraform {
     bucket = "terraformstate-circleci"
     key    = "circleci-runner-aws.tfstate"
     region = "us-east-1"
-    role_arn = "arn:aws:iam::730335471586:role/admin"
+    role_arn = "arn:aws:iam::730335471586:role/CircleCI-Runner-Role"
   }
 
 }
@@ -27,7 +27,7 @@ terraform {
 
 provider "aws" {
   assume_role {
-    role_arn     = "arn:aws:iam::730335471586:role/admin"
+    role_arn     = "arn:aws:iam::730335471586:role/CircleCI-Runner-Role"
     session_name = "circleci-runner-test"
   }
   region     = var.aws_region
