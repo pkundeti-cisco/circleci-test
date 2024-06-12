@@ -3,7 +3,7 @@
 resource "aws_autoscaling_group" "linux_runner_asg" {
   name                 = "${var.runner_prefix}_asg"
   availability_zones   = ["us-east-1a"]
-  desired_capacity     = 1
+  desired_capacity     = 0
   max_size             = 1
   min_size             = 0
   termination_policies = ["OldestInstance"]
