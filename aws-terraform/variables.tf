@@ -18,7 +18,7 @@ variable "runner_prefix" {
 }
 
 variable "volume_size" {
-  default = "30"
+  default = "500"
 }
 
 variable "volume_type" {
@@ -43,7 +43,7 @@ variable "keypair" {
 }
 
 variable "instance_type" {
-  default = "m5a.large"
+  default = "m5a.8xlarge"
 }
 
 variable "subnet_id" {
