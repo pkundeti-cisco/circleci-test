@@ -3,9 +3,9 @@
 resource "aws_autoscaling_group" "linux_runner_asg" {
   name                 = "${var.runner_prefix}_asg"
   availability_zones   = ["us-east-1a"]
-  desired_capacity     = 0
+  desired_capacity     = 1
   max_size             = 1
-  min_size             = 0
+  min_size             = 1
   termination_policies = ["OldestInstance"]
   launch_template {
     id      = aws_launch_template.linux_runner_launch_template.id
