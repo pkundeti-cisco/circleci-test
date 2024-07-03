@@ -8,7 +8,7 @@ executors:
     resource_class: cisco_sdwan/linux_ec2_test
     environment:
       HTTPS_PROXY: http://proxy.esl.cisco.com:80
-      NO_PROXY: *.cisco.com
+      NO_PROXY: "*.cisco.com"
 jobs:
   test:
     executor: machine-default
