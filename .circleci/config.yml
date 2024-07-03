@@ -20,7 +20,7 @@ jobs:
       # Replace this with steps to build a package, or executable
       - run:
           name: Build an artifact
-          command: echo "Hello!"
+          command: echo "Hello!!"
   deploy:
     machine: true
     resource_class: cisco_sdwan/linux_ec2_test
