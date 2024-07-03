@@ -20,7 +20,7 @@ jobs:
       # Replace this with a real test runner invocation
       - run:
           name: Run tests
-          command: echo "Hello!"
+          command: echo "Hello. I am running as ${USER}"
   build:
     executor: machine-default
     steps:
