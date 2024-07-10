@@ -17,7 +17,7 @@ jobs:
           name: Clone vtest repository
           command: |
             mkdir -p vtest
-            git clone git@sdwan-git.cisco.com:sdwan/vtest.git ~/vtest
+            git clone git@sdwan-git.cisco.com:sdwan/vtest.git vtest
       - run:
           name: vtest test suite
           command: |
