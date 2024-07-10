@@ -16,12 +16,12 @@ jobs:
       - run:
           name: Clone vtest repository
           command: |
-            mkdir -p ~/vtest
+            mkdir -p vtest
             git clone git@sdwan-git.cisco.com:sdwan/vtest.git ~/vtest
       - run:
           name: vtest test suite
           command: |
-            cd ~/vtest
+            cd vtest
             bin/runner seat -t setup -t ux2_cfg_deploy_for_pr -ntr -ns -ntg -q -x -b next -a STABLE -y sdwan_init/viptela_vulcan_kvm -n CAT -o -c -n CAT -dvn -edvn stcvm -o -x -c -ns -b 20.15 --prefer-local-images --force-download-branch-images
   test:
     executor: machine-default
