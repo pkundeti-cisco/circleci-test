@@ -23,17 +23,12 @@ jobs:
           command: |
             cd ~/vtest
             bin/runner seat -t setup -t ux2_cfg_deploy_for_pr -ntr -ns -ntg -q -x -b next -a STABLE -y sdwan_init/viptela_vulcan_kvm -n CAT -o -c -n CAT -dvn -edvn stcvm -o -x -c -ns -b 20.15 --prefer-local-images --force-download-branch-images
-  # test:
-  #   executor: machine-default
-  #   steps:
-  #     #- checkout
-  #     - run:
-  #         name: Checkout
-  #         command: git clone https://github.com/pkundeti-cisco/circleci-test.git 
-  #     # Replace this with a real test runner invocation
-  #     - run:
-  #         name: Run tests
-  #         command: echo "Hello. I am running as ${USER}"
+  test:
+    executor: machine-default
+    steps:
+      - run:
+          name: Run tests
+          command: echo "Hello. I am running as ${USER}"
   build:
     executor: machine-default
     steps:
