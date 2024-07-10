@@ -6,21 +6,34 @@ executors:
   machine-default:
     machine: true
     resource_class: cisco_sdwan/linux_ec2_test
-    environment:
-      HTTPS_PROXY: "http://proxy.esl.cisco.com:80"
-      NO_PROXY: "*.cisco.com"
+    # environment:
+    #   HTTPS_PROXY: "http://proxy.esl.cisco.com:80"
+    #   NO_PROXY: "*.cisco.com"
 jobs:
-  test:
+  vtest:
     executor: machine-default
     steps:
-      #- checkout
       - run:
-          name: Checkout
-          command: git clone https://github.com/pkundeti-cisco/circleci-test.git 
-      # Replace this with a real test runner invocation
+          name: Clone vtest repository
+          command: |
+            mkdir -p ~/vtest
+            git clone git@sdwan-git.cisco.com:sdwan/vtest.git ~/vtest
       - run:
-          name: Run tests
-          command: echo "Hello. I am running as ${USER}"
+          name: vtest test suite
+          command: |
+            cd ~/vtest
+            bin/runner seat -t setup -t ux2_cfg_deploy_for_pr -ntr -ns -ntg -q -x -b next -a STABLE -y sdwan_init/viptela_vulcan_kvm -n CAT -o -c -n CAT -dvn -edvn stcvm -o -x -c -ns -b 20.15 --prefer-local-images --force-download-branch-images
+  # test:
+  #   executor: machine-default
+  #   steps:
+  #     #- checkout
+  #     - run:
+  #         name: Checkout
+  #         command: git clone https://github.com/pkundeti-cisco/circleci-test.git 
+  #     # Replace this with a real test runner invocation
+  #     - run:
+  #         name: Run tests
+  #         command: echo "Hello. I am running as ${USER}"
   build:
     executor: machine-default
     steps:
