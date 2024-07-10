@@ -40,7 +40,7 @@ workflows:
   example:
     jobs:
       - test
-      - build:
+      - vtest:
           requires:
             - test
       - deploy:
