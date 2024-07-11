@@ -15,13 +15,13 @@ jobs:
     steps:
       - run:
           name: Clone vtest repository
-          no_build_output: 2h
+          no_build_output: 3h
           command: |
             mkdir -p vtest
             git clone git@sdwan-git.cisco.com:sdwan/vtest.git vtest
       - run:
           name: vtest test suite
-          no_build_output: 2h
+          no_build_output: 3h
           command: |
             cd vtest
             source /scratch/jenkins/venvs/py38_vtest/bin/activate
