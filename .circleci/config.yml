@@ -25,7 +25,7 @@ jobs:
           command: |
             cd vtest
             source /scratch/jenkins/venvs/py38_vtest/bin/activate
-            bin/runner seat -t setup -t ux2_cfg_deploy_for_pr -ntr -ns -ntg -q -x -b next -a STABLE -y sdwan_init/viptela_vulcan_kvm -n CAT -o -c -n CAT -dvn -edvn stcvm -o -x -c -ns -b 20.15 --prefer-local-images --force-download-branch-images
+            bin/runner vexpress -et rest -et test_scp_traffic -tt -b next -a STABLE -n tb -o -c -x --tls -y viptela_kvm -n CAT -dvn -edvn stcvm -o -x -c -ns -b next
   test:
     executor: machine-default
     steps:
